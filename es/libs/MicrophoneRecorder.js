@@ -16,7 +16,7 @@ var constraints = { audio: true };
 
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-var MicrophoneRecorder = function MicrophoneRecorder(onStart, onStop, onSave, onData, options) {
+var MicrophoneRecorder = function MicrophoneRecorder(onStart, onStop, onSave, onData, options, interval) {
   var _this = this;
 
   _classCallCheck(this, MicrophoneRecorder);
@@ -36,8 +36,12 @@ var MicrophoneRecorder = function MicrophoneRecorder(onStart, onStop, onSave, on
               onDataCallback(e.data);
             }
           });
-
-          mediaRecorder.start();
+          
+          if(interval)
+            mediaRecorder.start(interval);
+          else
+            mediaRecorder.start();
+          
           mediaRecorder.addEventListener("stop", _this.onStop);
         }).catch(function (err) {
           return console.log(err.name + ": " + err.message);
