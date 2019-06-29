@@ -29,7 +29,8 @@ var ReactRecord = function (_Component) {
   }
 
   ReactRecord.prototype.componentDidMount = function componentDidMount() {
-    if (!AudioPlayer) return;
+    console.log("IN componentDidMount", _props.interval); 
+    if (!_AudioPlayer2.default) return;
     var _props = this.props,
         onSave = _props.onSave,
         onStop = _props.onStop,
@@ -37,7 +38,8 @@ var ReactRecord = function (_Component) {
         onData = _props.onData,
         audioElem = _props.audioElem,
         audioBitsPerSecond = _props.audioBitsPerSecond,
-        mimeType = _props.mimeType;
+        mimeType = _props.mimeType,
+        interval = _props.interval;
 
     var options = {
       audioBitsPerSecond: audioBitsPerSecond,
@@ -45,10 +47,10 @@ var ReactRecord = function (_Component) {
     };
 
     if (audioElem) {
-      AudioPlayer.create(audioElem);
+      _AudioPlayer2.default.create(audioElem);
     } else {
       this.setState({
-        microphoneRecorder: new MicrophoneRecorder(onStart, onStop, onSave, onData, options)
+        microphoneRecorder: new _MicrophoneRecorder2.default(onStart, onStop, onSave, onData, options, interval)
       });
     }
   };
