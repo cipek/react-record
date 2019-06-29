@@ -29,7 +29,6 @@ var ReactRecord = function (_Component) {
   }
 
   ReactRecord.prototype.componentDidMount = function componentDidMount() {
-    console.log("IN componentDidMount", _props.interval); 
     if (!_AudioPlayer2.default) return;
     var _props = this.props,
         onSave = _props.onSave,
