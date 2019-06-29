@@ -29,7 +29,7 @@ var ReactRecord = function (_Component) {
   }
 
   ReactRecord.prototype.componentDidMount = function componentDidMount() {
-    if (!_AudioPlayer2.default) return;
+    if (!AudioPlayer) return;
     var _props = this.props,
         onSave = _props.onSave,
         onStop = _props.onStop,
@@ -46,10 +46,10 @@ var ReactRecord = function (_Component) {
     };
 
     if (audioElem) {
-      _AudioPlayer2.default.create(audioElem);
+      AudioPlayer.create(audioElem);
     } else {
       this.setState({
-        microphoneRecorder: new _MicrophoneRecorder2.default(onStart, onStop, onSave, onData, options, interval)
+        microphoneRecorder: new MicrophoneRecorder(onStart, onStop, onSave, onData, options, interval)
       });
     }
   };
