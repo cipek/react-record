@@ -29,7 +29,7 @@ var MicrophoneRecorder = function MicrophoneRecorder(onStart, onStop, onSave, on
         navigator.mediaDevices.getUserMedia(constraints).then(function (str) {
           mediaRecorder = new MediaRecorder(str);
           var audioCtx = AudioContext.getAudioContext();
-          audioCtx.resume().then(() => {
+          audioCtx.resume().then(function () {
             if (onStartCallback) {
               onStartCallback();
             }
