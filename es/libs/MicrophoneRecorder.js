@@ -2,7 +2,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 import MediaRecorder from "audio-recorder-polyfill";
 import ConvertToMP3 from "./lamemp3";
-import AudioContext from './AudioContext';
 
 var mediaRecorder = void 0;
 var chunks = [];
@@ -28,25 +27,22 @@ var MicrophoneRecorder = function MicrophoneRecorder(onStart, onStop, onSave, on
       if (navigator.mediaDevices) {
         navigator.mediaDevices.getUserMedia(constraints).then(function (str) {
           mediaRecorder = new MediaRecorder(str);
-          var audioCtx = AudioContext.getAudioContext();
-          audioCtx.resume().then(function () {
-            if (onStartCallback) {
-              onStartCallback();
+          if (onStartCallback) {
+            onStartCallback();
+          }
+          mediaRecorder.addEventListener("dataavailable", function (e) {
+            chunks = e.data;
+            if (onDataCallback) {
+              onDataCallback(e.data);
             }
-            mediaRecorder.addEventListener("dataavailable", function (e) {
-              chunks = e.data;
-              if (onDataCallback) {
-                onDataCallback(e.data);
-              }
-            });
-
-            if(interval)
-              mediaRecorder.start(interval);
-            else
-              mediaRecorder.start();
-
-            mediaRecorder.addEventListener("stop", _this.onStop);
           });
+
+          if(interval)
+            mediaRecorder.start(interval);
+          else
+            mediaRecorder.start();
+
+          mediaRecorder.addEventListener("stop", _this.onStop);
         }).catch(function (err) {
           return console.log(err.name + ": " + err.message);
         });
